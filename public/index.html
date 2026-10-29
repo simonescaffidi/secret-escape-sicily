@@ -1,4 +1,4 @@
-<!doctype html><html lang="it"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}<meta name="description" content="Secret Escape Sicily &mdash; tour ed esperienze esclusive in Sicilia: Madonie, Taormina, Ortigia, golf e supercar. Itinerari su misura tra natura, cultura ed enogastronomia siciliana."><link rel="canonical" href="https://secret-escape-sicily.up.railway.app/"><meta property="og:type" content="website"><meta property="og:site_name" content="Secret Escape Sicily"><meta property="og:title" content="Secret Escape Sicily"><meta property="og:description" content="Tour ed esperienze esclusive in Sicilia: Madonie, Taormina, Ortigia, golf e supercar."><meta property="og:locale" content="it_IT"><meta property="og:locale:alternate" content="en_US"><title>Secret Escape Sicily</title></style></head><body>
+<!doctype html><html lang="it"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="google-site-verification" content="vwQYLsjQXvnL9Ev9UEC1nb2MhZyF7sMWmx4ODCmhCb4" /><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}<meta name="description" content="Secret Escape Sicily &mdash; tour ed esperienze esclusive in Sicilia: Madonie, Taormina, Ortigia, golf e supercar. Itinerari su misura tra natura, cultura ed enogastronomia siciliana."><link rel="canonical" href="https://secret-escape-sicily.up.railway.app/"><meta property="og:type" content="website"><meta property="og:site_name" content="Secret Escape Sicily"><meta property="og:title" content="Secret Escape Sicily"><meta property="og:description" content="Tour ed esperienze esclusive in Sicilia: Madonie, Taormina, Ortigia, golf e supercar."><meta property="og:locale" content="it_IT"><meta property="og:locale:alternate" content="en_US"><title>Secret Escape Sicily</title></style></head><body>
 <style>
 :root{
   --bg: #faf8f4;
@@ -484,6 +484,22 @@ form.contact-form{ display:grid; gap:.85rem; }
   try { savedLang = localStorage.getItem("sesc_lang"); } catch(e){}
   applyLang(savedLang === "en" ? "en" : "it");
 
+  /* Google Analytics 4 — caricato SOLO dopo consenso esplicito (GDPR) */
+  var GA_MEASUREMENT_ID = "G-307HKL4NS3";
+  function loadGA(){
+    if (window.__gaLoaded) return;
+    window.__gaLoaded = true;
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_MEASUREMENT_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", GA_MEASUREMENT_ID, { anonymize_ip: true });
+  }
+
   /* Cookie banner */
   var COOKIE_NAME = "sesc_cookie_consent_v1";
   function getConsent(){ try{ var r=localStorage.getItem(COOKIE_NAME); return r?JSON.parse(r):null; }catch(e){ return null; } }
@@ -491,9 +507,12 @@ form.contact-form{ display:grid; gap:.85rem; }
     try{ localStorage.setItem(COOKIE_NAME, JSON.stringify(c)); }catch(e){}
     document.getElementById("cookie-banner").style.display = "none";
     document.getElementById("cookie-modal").style.display = "none";
+    if (c && c.statistics) loadGA();
   }
   var banner = document.getElementById("cookie-banner");
-  if (!getConsent()) banner.style.display = "block";
+  var existingConsent = getConsent();
+  if (!existingConsent) banner.style.display = "block";
+  else if (existingConsent.statistics) loadGA();
   document.getElementById("cb-accept").addEventListener("click", function(){ setConsent({necessary:true,statistics:true,marketing:true}); });
   document.getElementById("cb-reject").addEventListener("click", function(){ setConsent({necessary:true,statistics:false,marketing:false}); });
   document.getElementById("cb-customize").addEventListener("click", function(){ document.getElementById("cookie-modal").style.display = "flex"; });
