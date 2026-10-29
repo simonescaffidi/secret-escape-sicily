@@ -1,3 +1,8 @@
 node_modules/
 .env
 *.log
+
+# Copie di lavoro locali (duplicano public/index.html e public/assets/)
+artifact-source.html
+artifact-updated.html
+assets/
